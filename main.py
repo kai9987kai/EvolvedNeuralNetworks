@@ -4,7 +4,7 @@ import random
 import os
 
 # Configuring the network to be evolved
-config_path = os.path.join(os.getcwd(), 'config-feedforward')
+config_path = os.path.join(os.getcwd(), 'config-feedforward.txt')
 
 # Define a simple evaluation function
 def eval_genomes(genomes, config):
