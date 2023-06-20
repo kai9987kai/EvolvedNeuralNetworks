@@ -11,9 +11,9 @@ def eval_genomes(genomes, config):
     for genome_id, genome in genomes:
         genome.fitness = 4.0
         net = neat.nn.FeedForwardNetwork.create(genome, config)
-        for xi in range(-10,10):
-            output = net.activate([xi])
-            genome.fitness -= (output[0] - xi ** 2) ** 2
+        for xi, yi in zip(range(-10,10), range(-10,10)):  # supply two inputs
+            output = net.activate([xi, yi])
+            genome.fitness -= (output[0] - (xi ** 2 + yi ** 2)) ** 2
 
 # Load configuration
 config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
@@ -37,10 +37,10 @@ print('\nBest genome:\n{!s}'.format(winner))
 # Show output of the most fit genome against training data.
 print('\nOutput:')
 winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
-for xi in range(-10,10):
-    output = winner_net.activate([xi])
-    print("input {!r}, expected output {!r}, got {!r}".format(
-        xi, xi**2, output[0]
+for xi, yi in zip(range(-10,10), range(-10,10)):  # supply two inputs
+    output = winner_net.activate([xi, yi])
+    print("input {!r}, {!r}, expected output {!r}, got {!r}".format(
+        xi, yi, (xi**2 + yi**2), output[0]
     ))
 
 # Visualize the network
